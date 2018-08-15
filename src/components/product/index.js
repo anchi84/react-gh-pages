@@ -1,9 +1,24 @@
 import React from "react";
 
 class Product extends React.Component {
+   state = {
+        name: "",
+        price: 0,
+        count: 0
+    };
 
     product = this.props.product;
-    
+
+    handleChange = (event) => {
+        console.log(event.target.value.split(',')[0]);
+        console.log(event.target.value.split(',')[1]);
+        console.log(event.target.value.split(',')[2]);
+        this.setState({name: event.target.value.split(',')[0],
+                        price: event.target.value.split(',')[1],
+                        count: event.target.value.split(',')[2]
+        });
+    }
+
     render() {
         return (
             <div className="product">
@@ -14,14 +29,16 @@ class Product extends React.Component {
                         required
                         onChange={this.handleChange}
                     >
-                        {this.props.product.colors.map(color => (
-                            <option value={color.name} key={color.name}>
-                                {color.name}
-                            </option>
-                        ))}
+                    <option/>
+                    {
+                        this.product.colors.map(color => (
+                        <option value={[color.name, color.price, color.count]} key={color.name}>
+                            {color.name}
+                        </option>
+                    ))}
                 </select>
-                <p>Price per piece:  EUR. </p>
-                <p>Available pieces: </p>
+                <p>Price per piece: {this.state.price} EUR. </p>
+                <p>Available pieces: {this.state.count}</p>
                 <label>Pieces:</label>
                 <input type="number"/>
                 <button>-</button>

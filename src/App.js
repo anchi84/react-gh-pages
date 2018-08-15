@@ -14,7 +14,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = `https://my-json-server.typicode.com/anchi84/react-gh-pages/products`;
+    const url = `https://my-json-server.typicode.com/anchi84/web-shop/products`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
