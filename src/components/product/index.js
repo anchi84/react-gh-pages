@@ -26,10 +26,9 @@ class Product extends React.Component {
                 <p>{this.product.description}</p>
                 <select
                         name="colors"
-                        required
                         onChange={this.handleChange}
                     >
-                    <option/>
+                    <option value={['none',0,0]} default>Select your color...</option>
                     {
                         this.product.colors.map(color => (
                         <option value={[color.name, color.price, color.count]} key={color.name}>
@@ -37,14 +36,14 @@ class Product extends React.Component {
                         </option>
                     ))}
                 </select>
-                <p>Price per piece: {this.state.price} EUR. </p>
+                <p>Price per piece: {this.state.price} EUR </p>
                 <p>Available pieces: {this.state.count}</p>
                 <label>Pieces:</label>
                 <input type="number"/>
                 <button>-</button>
                 <button>+</button>
-
-            </div>
+                <hr/>
+        </div>
         );
     }
 }

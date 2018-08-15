@@ -2445,3 +2445,4 @@ If you have ideas for more “How To” recipes that should be on this page, [le
 
 update gh-pages
 git push -f origin master:gh-pages
+npm run deploy
