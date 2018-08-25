@@ -1,36 +1,52 @@
 import React from "react";
 
 class Product extends React.Component {
-   state = {
-        name: "",
-        price: 0,
-        count: 0
-    };
+   
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "",
+            price: 0,
+            count: 0
+        };
+    }
 
-    product = this.props.product;
-
-    handleChange = (event) => {
-        console.log(event.target.value.split(',')[0]);
-        console.log(event.target.value.split(',')[1]);
-        console.log(event.target.value.split(',')[2]);
-        this.setState({name: event.target.value.split(',')[0],
-                        price: event.target.value.split(',')[1],
-                        count: event.target.value.split(',')[2]
-        });
+    handleColorChange = (event) => {
+        const values = event.target.value.split(','); 
+        console.log(values[0]);
+        console.log(values[1]);
+        console.log(values[2]);
+        this.setState(
+            {
+                name: values[0],
+                price: values[1],
+                count: values[2]
+            }
+        );
     }
 
     render() {
+        const {
+            name,
+            description,
+            colors,
+            price,
+            count
+        } = this.props.product;
+        
+        console.log(this.props.product);
+        
         return (
             <div className="product">
-                <p>{this.product.name}</p>
-                <p>{this.product.description}</p>
+                <p>{name}</p>
+                <p>{description}</p>
                 <select
-                        name="colors"
-                        onChange={this.handleChange}
-                    >
+                    name="colors"
+                    onChange={this.handleColorChange}
+                >
                     <option value={['none',0,0]} default>Select your color...</option>
                     {
-                        this.product.colors.map(color => (
+                        colors.map(color => (
                         <option value={[color.name, color.price, color.count]} key={color.name}>
                             {color.name}
                         </option>

@@ -7,15 +7,12 @@ class Products extends React.Component {
         return (
             <div className="products">
                 {
-                    this.props.products ? (
-                        this.props.products.map(product => (
-                        <Product 
-                            key={product.code}
-                            product={product}
-                        />
-                    ))) : (
-                        <p />
-                    )
+                    this.props.products.map(product => (
+                    <Product 
+                        key={product.code}
+                        product={product}
+                    />
+                    ))
                 }
             </div>
         );
