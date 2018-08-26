@@ -21,9 +21,9 @@ class Product extends React.Component {
         this.setState(
             {
                 name: values[0],
-                price: values[1],
-                count: values[2],
-                defaultCount: values[2],
+                price: Number(values[1]),
+                count: Number(values[2]),
+                defaultCount: Number(values[2]),
                 input: ""
             }
         );
@@ -34,7 +34,7 @@ class Product extends React.Component {
     }
 
     handleInputChange = (event) => {
-        const value = event.target.value;  
+        const value = Number(event.target.value);  
         if(value >= 0 && value <= this.state.count) {
             this.setState(
                 { 
@@ -49,8 +49,8 @@ class Product extends React.Component {
         if (this.state.input > 0 && this.state.count >= 0) {
             this.setState(
                 { 
-                    input: Number(this.state.input)-1,
-                    count: Number(this.state.count)+1
+                    input: this.state.input-1,
+                    count: this.state.count+1
                 }
             );
         }
