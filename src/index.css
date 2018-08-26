@@ -33,3 +33,13 @@ body {
   padding: 20px 0;
   border: 3px solid green;
 }
+
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

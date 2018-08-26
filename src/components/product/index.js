@@ -7,7 +7,9 @@ class Product extends React.Component {
         this.state = {
             name: "",
             price: 0,
-            count: 0
+            count: 0,
+            defaultCount: 0,
+            input: ""
         };
     }
 
@@ -20,11 +22,52 @@ class Product extends React.Component {
             {
                 name: values[0],
                 price: values[1],
-                count: values[2]
+                count: values[2],
+                defaultCount: values[2],
+                input: ""
             }
         );
     }
 
+    handleInput = (event) => {
+        this.setState({input: "", count: this.state.defaultCount});
+    }
+
+    handleInputChange = (event) => {
+        const value = event.target.value;  
+        if(value >= 0 && value <= this.state.count) {
+            this.setState(
+                { 
+                    input: value,
+                    count: this.state.count-value
+                }
+            );
+        }  
+    }
+
+    handleMinus = (event) => {
+        if (this.state.input > 0 && this.state.count >= 0) {
+            this.setState(
+                { 
+                    input: Number(this.state.input)-1,
+                    count: Number(this.state.count)+1
+                }
+            );
+        }
+    }
+
+    handlePlus = (event) => {
+        if (this.state.input >= 0 && this.state.count > 0) {
+            this.setState(
+                { 
+                    input: Number(this.state.input)+1,
+                    count: Number(this.state.count)-1
+                }
+            );
+        }
+    }
+
+    
     render() {
         const {
             name,
@@ -34,7 +77,7 @@ class Product extends React.Component {
             count
         } = this.props.product;
         
-        console.log(this.props.product);
+        // console.log(this.props.product);
         
         return (
             <div className="product">
@@ -55,9 +98,16 @@ class Product extends React.Component {
                 <p>Price per piece: {this.state.price} EUR </p>
                 <p>Available pieces: {this.state.count}</p>
                 <label>Pieces:</label>
-                <input type="number"/>
-                <button>-</button>
-                <button>+</button>
+                <input 
+                    type="number" 
+                    min="0" 
+                    max={this.state.count} 
+                    value={this.state.input} 
+                    onChange={this.handleInputChange}
+                    onKeyDown={this.handleInput}
+                />
+                <button onClick={this.handleMinus}>-</button>
+                <button onClick={this.handlePlus}>+</button>
                 <hr/>
         </div>
         );

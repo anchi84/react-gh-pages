@@ -8,10 +8,10 @@ class Products extends React.Component {
             <div className="products">
                 {
                     this.props.products.map(product => (
-                    <Product 
-                        key={product.code}
-                        product={product}
-                    />
+                        <Product 
+                            key={product.code}
+                            product={product}
+                        />
                     ))
                 }
             </div>
