@@ -3,13 +3,17 @@ import './App.css';
 import Header from './components/header';
 import Footer from './components/footer';
 import Products from './components/products';
+import Cart from './components/cart'
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      products:[]
+      products:[],
+      total: 0,
+      items: 0,
+      different: 0
     };
   }
 
@@ -23,11 +27,22 @@ class App extends Component {
       });
   }
 
+  handleAdd = (total, items) => {
+    this.setState(
+      {
+        total: this.state.total + total,
+        items: this.state.items + items,
+        // different: 1 
+      }
+    );  
+  }
+
 render() {
     return (
       <div>
         <Header/>
-        <Products products={this.state.products}/>
+        <Cart total={this.state.total} different={this.state.different} items={this.state.items}/>
+        <Products products={this.state.products} handleAdd={this.handleAdd}/>
         <Footer/>
       </div>
     );

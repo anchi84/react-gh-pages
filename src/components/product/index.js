@@ -9,7 +9,8 @@ class Product extends React.Component {
             price: 0,
             count: 0,
             defaultCount: 0,
-            input: ""
+            input: 0,
+            total: 0
         };
     }
 
@@ -24,13 +25,13 @@ class Product extends React.Component {
                 price: Number(values[1]),
                 count: Number(values[2]),
                 defaultCount: Number(values[2]),
-                input: ""
+                input: 0,
             }
         );
     }
 
     handleInput = (event) => {
-        this.setState({input: "", count: this.state.defaultCount});
+        this.setState({input: '', count: this.state.defaultCount});
     }
 
     handleInputChange = (event) => {
@@ -39,7 +40,8 @@ class Product extends React.Component {
             this.setState(
                 { 
                     input: value,
-                    count: this.state.count-value
+                    count: this.state.count - value,
+                    total: value * this.state.price
                 }
             );
         }  
@@ -49,8 +51,9 @@ class Product extends React.Component {
         if (this.state.input > 0 && this.state.count >= 0) {
             this.setState(
                 { 
-                    input: this.state.input-1,
-                    count: this.state.count+1
+                    input: this.state.input - 1,
+                    count: this.state.count + 1,
+                    total: (this.state.input - 1) * this.state.price
                 }
             );
         }
@@ -60,14 +63,19 @@ class Product extends React.Component {
         if (this.state.input >= 0 && this.state.count > 0) {
             this.setState(
                 { 
-                    input: Number(this.state.input)+1,
-                    count: Number(this.state.count)-1
+                    input: this.state.input + 1,
+                    count: this.state.count - 1,
+                    total: (this.state.input + 1) * this.state.price
                 }
             );
         }
     }
 
-    
+    handleAdd = (event) => {
+        this.props.handleAdd(this.state.total, this.state.input);
+        this.setState({total: 0, input: 0});
+    }
+
     render() {
         const {
             name,
@@ -90,14 +98,16 @@ class Product extends React.Component {
                     <option value={['none',0,0]} default>Select your color...</option>
                     {
                         colors.map(color => (
-                        <option value={[color.name, color.price, color.count]} key={color.name}>
-                            {color.name}
-                        </option>
-                    ))}
+                            <option value={[color.name, color.price, color.count]} key={color.name}>
+                                {color.name}
+                            </option>
+                        ))
+                    }
                 </select>
                 <p>Price per piece: {this.state.price} EUR </p>
                 <p>Available pieces: {this.state.count}</p>
-                <label>Pieces:</label>
+                <label>Pieces: </label>
+                <button onClick={this.handleMinus}>-</button>
                 <input 
                     type="number" 
                     min="0" 
@@ -105,9 +115,9 @@ class Product extends React.Component {
                     value={this.state.input} 
                     onChange={this.handleInputChange}
                     onKeyDown={this.handleInput}
-                />
-                <button onClick={this.handleMinus}>-</button>
+                />  
                 <button onClick={this.handlePlus}>+</button>
+                <button onClick={this.handleAdd}>Add to cart</button>
                 <hr/>
         </div>
         );

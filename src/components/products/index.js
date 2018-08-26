@@ -3,6 +3,10 @@ import Product from "../product";
 
 class Products extends React.Component {
 
+    handleAdd = (total, items) => {
+        this.props.handleAdd(total, items);
+    }
+
     render() {
         return (
             <div className="products">
@@ -11,6 +15,7 @@ class Products extends React.Component {
                         <Product 
                             key={product.code}
                             product={product}
+                            handleAdd={this.handleAdd}
                         />
                     ))
                 }

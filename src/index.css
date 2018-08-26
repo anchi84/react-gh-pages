@@ -11,7 +11,6 @@ body {
   padding: 10px;
   background-color: #298fca;
   color: white;
-  margin-top: 50px;
 }
 
 .header {
@@ -21,25 +20,47 @@ body {
   padding: 10px;
   background-color: #298fca;
   color: white;
-  margin-bottom: 50px;
+  font-size: 1.2em;
+}
+
+.cart {
+  position: fixed;
+  top: 80px;
+  width: 100%;
+  padding: 10px;
+  background-color: #c46711;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+}
+
+span {
+  flex-grow: 1;
+  padding: 0 2%;
+  margin: auto 0;
 }
 
 .products {
   position: fixed;
   overflow: scroll;
-  top: 70px;
+  top: 135px;
   bottom: 70px;
   width: 100%;
-  padding: 20px 0;
-  border: 3px solid green;
+  padding: 10px;
+  border: 2px solid green;
 }
 
 input[type='number'] {
   -moz-appearance:textfield;
+  text-align: center;
 }
 
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+button {
+  font-family: monospace;
 }
