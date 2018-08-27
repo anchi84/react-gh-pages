@@ -31,7 +31,7 @@ class Product extends React.Component {
     }
 
     handleInput = (event) => {
-        this.setState({input: '', count: this.state.defaultCount});
+        this.setState({input: 0, count: this.state.defaultCount});
     }
 
     handleInputChange = (event) => {
@@ -109,9 +109,10 @@ class Product extends React.Component {
                 <label>Pieces: </label>
                 <button onClick={this.handleMinus}>-</button>
                 <input 
-                    type="number" 
+                    type="text" 
                     min="0" 
-                    max={this.state.count} 
+                    max={this.state.count}
+                    pattern="[0-9]+" 
                     value={this.state.input} 
                     onChange={this.handleInputChange}
                     onKeyDown={this.handleInput}
