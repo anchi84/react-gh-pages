@@ -9,6 +9,8 @@ class Product extends React.Component {
             price: 0,
             count: 0,
             defaultCount: 0,
+            added: [0, 0, 0],
+            index: 0,
             input: 0,
             total: 0
         };
@@ -19,11 +21,13 @@ class Product extends React.Component {
         console.log(values[0]);
         console.log(values[1]);
         console.log(values[2]);
+        console.log(values[3]);
         this.setState(
             {
                 name: values[0],
                 price: Number(values[1]),
-                count: Number(values[2]),
+                index: values[3],
+                count: Number(values[2]) - this.state.added[values[3]],
                 defaultCount: Number(values[2]),
                 input: 0,
             }
@@ -31,24 +35,24 @@ class Product extends React.Component {
     }
 
     handleInput = (event) => {
-        this.setState({input: 0, count: this.state.defaultCount});
+        this.setState({input: 0, count: this.state.defaultCount - this.state.added[this.state.index]});
     }
 
     handleInputChange = (event) => {
-        const value = Number(event.target.value);  
-        if(value >= 0 && value <= this.state.count) {
+        const inputValue = Number(event.target.value);  
+        if(inputValue >= 0 && inputValue <= this.state.count) {
             this.setState(
                 { 
-                    input: value,
-                    count: this.state.count - value,
-                    total: value * this.state.price
+                    input: inputValue,
+                    count: this.state.count - inputValue,
+                    total: inputValue * this.state.price
                 }
             );
         }  
     }
 
     handleMinus = (event) => {
-        if (this.state.input > 0 && this.state.count >= 0) {
+        if(this.state.input > 0 && this.state.count >= 0) {
             this.setState(
                 { 
                     input: this.state.input - 1,
@@ -60,7 +64,7 @@ class Product extends React.Component {
     }
 
     handlePlus = (event) => {
-        if (this.state.input >= 0 && this.state.count > 0) {
+        if(this.state.input >= 0 && this.state.count > 0) {
             this.setState(
                 { 
                     input: this.state.input + 1,
@@ -73,7 +77,15 @@ class Product extends React.Component {
 
     handleAdd = (event) => {
         this.props.handleAdd(this.state.total, this.state.input);
-        this.setState({total: 0, input: 0});
+        let added = [...this.state.added];
+        added[this.state.index] = this.state.added[this.state.index] + this.state.input;
+        this.setState(
+            {
+                total: 0, 
+                input: 0, 
+                added
+            }
+        );
     }
 
     render() {
@@ -81,8 +93,6 @@ class Product extends React.Component {
             name,
             description,
             colors,
-            price,
-            count
         } = this.props.product;
         
         // console.log(this.props.product);
@@ -97,11 +107,19 @@ class Product extends React.Component {
                 >
                     <option value={['none',0,0]} default>Select your color...</option>
                     {
-                        colors.map(color => (
-                            <option value={[color.name, color.price, color.count]} key={color.name}>
-                                {color.name}
-                            </option>
-                        ))
+                        colors.map((color, index) => {
+                            const {
+                                name,
+                                price,
+                                count
+                            } = color;
+                          
+                            return (
+                                <option value={[name, price, count, index]} key={name}>
+                                    {name}
+                                </option>
+                            )
+                        })
                     }
                 </select>
                 <p>Price per piece: {this.state.price} EUR </p>
@@ -120,7 +138,7 @@ class Product extends React.Component {
                 <button onClick={this.handlePlus}>+</button>
                 <button onClick={this.handleAdd}>Add to cart</button>
                 <hr/>
-        </div>
+            </div>
         );
     }
 }

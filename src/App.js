@@ -41,7 +41,11 @@ render() {
     return (
       <div>
         <Header/>
-        <Cart total={this.state.total} different={this.state.different} items={this.state.items}/>
+        <Cart 
+          total={this.state.total}
+          items={this.state.items} 
+          different={this.state.different}
+        />
         <Products products={this.state.products} handleAdd={this.handleAdd}/>
         <Footer/>
       </div>
